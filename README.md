@@ -4,7 +4,7 @@
 
 ---
 
-Linux 下的简易 web 服务器，实现 web 端用户注册，登录功能，经压力测试可以实现上万的并发连接数据交换。
+这个项目是基于 C/C++语言和 B/S 模型完成的 web 服务器，主要实现了 web 端的注册和登录、实现了同步和异步日志，记录服务器运行状态的功能，并支持 http 长连接。
 
 > - [前言](#前言)
 > - [测试结果](#测试结果)
@@ -18,7 +18,7 @@ Linux 下的简易 web 服务器，实现 web 端用户注册，登录功能，�
 
 项目是参考了网上许多的博客与 Github 上面的项目(在文末列出[参考文献](#参考文献))，在他们的基础上做一个整理(其实很多 Github 项目并不能很好的运行，即便按照作者所提供的方法进行修改各种源文件或者配置文件，当然不排除笔者由于技术不足导致的失败)。
 
-笔者对这个项目进行了详细的注释，小到类中成员变量，大到函数结构体均由详细注释，让您在阅读的过程中不那么痛苦。在每一个模块对应的文件夹中有 READNME 文件，您可以通过对其阅读，了解模块的作用，同时笔者还记录一些需要准备的预备知识，与开发时所遇到的问题，当然，仅是部分问题。我还会在之后继续更新，补充，并在上面做修改，比如目前对线程池的实现。在 `thread_pool.cpp` 文件中，是对原有的一个升级。同样给出了详细的注释。每一个模块(除去日志模块)均给出了测试/改进程序。
+笔者对这个项目进行了详细的注释，小到类中成员变量，大到函数结构体均由详细注释，让您在阅读的过程中不那么痛苦。在每一个模块对应的文件夹中有 READNME 文件，您可以通过对其阅读，了解模块的作用，同时笔者还记录一些需要准备的预备知识，与开发时所遇到的问题，当然，仅是部分问题。我还会在之后继续更新，补充，并在上面做修改，比如目前对线程池的实现。在 `thread_pool.cpp` 文件中，是对原有的一个升级。同样给出了详细的注释。每一个模块均给出了测试/改进程序。
 
 第一次做栽树人，希望后来人能够不要那么痛苦，四处寻找零散的项目。笔者也将再此好好努力，继续学习，拜托学校的稚气，争取春秋招有个好结果！与君共勉。
 
@@ -30,7 +30,7 @@ Linux 下的简易 web 服务器，实现 web 端用户注册，登录功能，�
 
 测试之前使用 Apache Bench 进行测试，但是提示`socket: Too many open files (24)`，同时查看日志文件可以发现，文件描述符打开至 255，估计也是系统默认的大小。
 
-<div align=center><img src="/img/abtest1.png" height="201"/> </div>
+<div align=center><img src="/img/abtest1.png"/> </div>
 
 使用`sudo ulimit -n 65535`修改的时候提示：`sudo: ulimit: command not found`。本质上还是因为 ulimit 是一个类似于 shell 的 cd，而不是一个单独的程序。所以无法通过 sudo 提权。
 
@@ -91,7 +91,7 @@ Percentage of the requests served within a certain time (ms)
 
 再次做了一此实验，参数一致，但是数据有些波动。(之前是将结果重定向至一个日志文件中，此次方便截屏显示结果)
 
-<div align=center><img src="/img/abtest2.jpg" height="201"/> </div>
+<div align=center><img src="/img/abtest2.jpg"/> </div>
 
 ---
 
@@ -117,7 +117,7 @@ Percentage of the requests served within a certain time (ms)
 
 输入合法的用户名密码之后，点击确定即可进入欢迎页面，显示测试成功：
 
-<div align=center><img src="/img/5.png"/></div>
+<div align=center><img src="/img/5.png" height="400"/></div>
 
 ## Web端测试
 
@@ -175,3 +175,5 @@ const char* doc_root="/home/h/StudyWebServer/root";
 - [apache AB 压力测试工具参数说明](https://www.cnblogs.com/ycookie/articles/6668646.html)
 - [ab 并发负载压力测试](https://www.cnblogs.com/nulige/p/9370063.html)
 - [MySQL 密码设置](https://www.cnblogs.com/super-zhangkun/p/9435974.html)
+- [高性能服务器框架](https://www.pcserver.cn/h-nd-38.html)
+- [reactor/proactor两种高效的事件处理模式和并发模式](https://blog.csdn.net/janeqi1987/article/details/73930258)
